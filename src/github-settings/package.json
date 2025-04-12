@@ -1,0 +1,17 @@
+{
+  "name": "github-settings",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "probot": "^13.4.1",
+    "@probot/adapter-aws-lambda-serverless": "^4.0.3",
+    "@repository-settings/app": "^4.1.8",
+    "@aws-sdk/client-ssm": "^3.787.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/aws-lambda": "^8.10.149"
+  }
+}
