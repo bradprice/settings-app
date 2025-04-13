@@ -1,18 +1,17 @@
-import { createProbot } from 'probot';
+import { createProbot, Probot } from 'probot';
 import { createLambdaFunction } from '@probot/adapter-aws-lambda-serverless';
 import { SSMClient, GetParameterCommand } from '@aws-sdk/client-ssm';
 import { Handler } from 'aws-lambda';
 import settingsApp from '@repository-settings/app';
-import { getConfig } from 'probot-config';
+import getConfig from 'probot-config';
 
-// Debug app import
-console.log('Settings app type:', typeof settingsApp, 'Settings app:', settingsApp);
+// Validate app import
 if (typeof settingsApp !== 'function') {
   throw new Error('Settings app is not a valid Probot app function. Check @repository-settings/app export.');
 }
 
 // Wrap settings app to match Probot's expected signature
-const app = (probot: import('probot').Probot) => {
+const app: import('probot').ApplicationFunction = (probot: Probot) => {
   settingsApp(probot, { getConfig });
 };
 
@@ -39,13 +38,11 @@ async function getPrivateKey(): Promise<string> {
     }
     return response.Parameter.Value;
   } catch (error) {
-    console.error('Failed to fetch private key:', error);
-    throw error;
+    throw new Error(`Failed to fetch private key: ${(error as Error).message}`);
   }
 }
 
-const handler: Handler = async (event, context) => {
-  console.log('Handler started, event:', JSON.stringify(event));
+const lambdaHandler: Handler = async (event, context) => {
   const privateKey = await getPrivateKey();
 
   const appId = process.env.APP_ID;
@@ -69,12 +66,10 @@ const handler: Handler = async (event, context) => {
 
   try {
     const lambdaFn = createLambdaFunction(app, { probot });
-    console.log('createLambdaFunction succeeded');
     return await lambdaFn(event, context);
   } catch (error) {
-    console.error('createLambdaFunction failed:', error);
-    throw error;
+    throw new Error(`createLambdaFunction failed: ${(error as Error).message}`);
   }
 };
 
-export const handler = handler; // Changed from webhooks
+export const handler = lambdaHandler;

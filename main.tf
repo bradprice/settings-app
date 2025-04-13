@@ -72,8 +72,8 @@ resource "aws_lambda_function" "github_settings" {
   role             = aws_iam_role.github_settings_role.arn
   handler          = "index.handler"
   runtime          = "nodejs20.x"
-  memory_size      = 128
-  timeout          = 3
+  memory_size      = 256
+  timeout          = 6
 
   environment {
     variables = {
@@ -117,9 +117,9 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
 }
 
 # Route: Define API Endpoint (e.g., GET /hello)
-resource "aws_apigatewayv2_route" "get_hello" {
+resource "aws_apigatewayv2_route" "post" {
   api_id    = aws_apigatewayv2_api.github_settings_api.id
-  route_key = "GET /"
+  route_key = "POST /"
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
