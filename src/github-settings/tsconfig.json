@@ -8,10 +8,23 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@repository-settings/app": ["types/github-settings.d.ts"]
+    }
   },
   "include": [
     "index.ts",
-    "types/**/*.d.ts"
+    "types/**/*.d.ts",
+    "__tests__/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
   ]
 }

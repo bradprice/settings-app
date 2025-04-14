@@ -3,7 +3,7 @@
 # SSM
 #=========================================================================================
 resource "aws_ssm_parameter" "github_private_key" {
-  name        = "/probot/private-key"
+  name        = "/github-settings/private-key"
   description = "Private key for GitHub Settings App"
   type        = "SecureString"
   value       = file(var.private_key)
@@ -64,7 +64,7 @@ resource "aws_cloudwatch_log_group" "github_settings" {
   retention_in_days = 1
 }
 
-# GitHub Settings Lambda  
+# GitHub Settings Lambda
 resource "aws_lambda_function" "github_settings" {
   function_name    = "github-settings"
   filename         = "dist/github-settings.zip"

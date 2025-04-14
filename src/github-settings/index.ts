@@ -15,7 +15,7 @@ const app: import('probot').ApplicationFunction = (probot: Probot) => {
   settingsApp(probot, { getConfig });
 };
 
-async function getPrivateKey(): Promise<string> {
+export async function getPrivateKey(): Promise<string> {
   const privateKeyParam = process.env.PRIVATE_KEY_PARAM;
   if (!privateKeyParam) {
     throw new Error('PRIVATE_KEY_PARAM environment variable is not set');
