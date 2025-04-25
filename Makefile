@@ -27,6 +27,9 @@ tflint:
 
 lint: tflint
 
+test:
+	cd src/github-settings && npm test
+
 install:
 	$(foreach VAR,$(SRC_DIR),npm install --prefix $(VAR);)
 

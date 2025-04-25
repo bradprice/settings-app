@@ -3,7 +3,7 @@ import { createLambdaFunction } from '@probot/adapter-aws-lambda-serverless';
 import { Handler } from 'aws-lambda';
 import settingsApp from '@repository-settings/app';
 import getConfig from 'probot-config';
-import { getPrivateKey } from './getPrivateKey';
+import { getPrivateKey } from './getPrivateKey.js';
 
 // Validate app import
 if (typeof settingsApp !== 'function') {
@@ -46,4 +46,4 @@ const lambdaHandler: Handler = async (event, context) => {
 };
 
 export const handler = lambdaHandler;
-export { getPrivateKey } from './getPrivateKey';
+export { getPrivateKey } from './getPrivateKey.js';

@@ -5,7 +5,7 @@ import { createLambdaFunction } from '@probot/adapter-aws-lambda-serverless';
 import settingsApp from '@repository-settings/app';
 import getConfig from 'probot-config';
 import { Handler, Context } from 'aws-lambda';
-import * as getPrivateKeyModule from '../getPrivateKey';
+import * as getPrivateKeyModule from '../getPrivateKey.js';
 
 // Mock dependencies
 jest.mock('@aws-sdk/client-ssm');
